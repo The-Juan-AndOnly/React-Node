@@ -1,5 +1,5 @@
 {
-  "name": "React-Node",
+  "name": "react-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/The-Juan-AndOnly/React-Node.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Juan Lopez",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/The-Juan-AndOnly/React-Node/issues"

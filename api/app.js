@@ -3,6 +3,7 @@
 // load modules
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
 // Bring in database & Models
 const sequelize = require('./db/database');
@@ -15,6 +16,9 @@ const enableGlobalErrorLogging =
 
 // create the Express app
 const app = express();
+
+// CORS Middleware
+app.use(cors());
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
