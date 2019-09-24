@@ -1,42 +1,42 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
+// import Home from './components/Home';
+import Header from './layout/Header';
+import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
+import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
+
+import NotFound from './components/NotFound';
+
+import {
+  UserSignInWithContext,
+  UserSignUpWithContext
+} from './context/ContextHelper';
+
 function App() {
-
-  const [api, setApi]=useState();
-  const [isLoading,setIsLoading] =useState(true);
-
-  useEffect(()=>{
-    // const fetchData= async()=>{
-    //   const response = await fetch('http://localhost:5000/api/courses');
-    //   const data = await response.json();
-    // //  console.log(data);
-    // setApi(data.courses)
-    // setIsLoading(false)
-    // console.log(api)
-    // console.log(isLoading)
-    fetch('http://localhost:5000/api/courses').then(resp=>resp.json()).then(data=>{
-      setApi(data.courses)
-      setIsLoading(false)
-      
-    }).catch(err=>console.log(err))
-    // }
-// fetchData();
-  },[])
-  
-  
   return (
-    <div className="App">
-      <h1>Hello </h1>
-      <ul style={{listStyle:'none'}}>
-      {isLoading ? "...Loading":(
-        api.map(course=>{
-          return<li style={{margin:"1rem 0"}}key={course.id}>{course.title}</li>})
-      )}
-      </ul>
- 
-    </div>
+    <Router>
+      <div className='App'>
+        <Route component={Header} />
+        <Switch>
+          <Route exact path='/' component={Courses} />
+          <Route path='/signup' component={UserSignUpWithContext} />
+          <Route path='/signin' component={UserSignInWithContext} />
+          <Route
+            exact
+            path='/course/:id'
+            render={props => <CourseDetail {...props} />}
+          />
+          <Route path='/courses/:id/update' component={UpdateCourse} />
+          <Route path='/courses/create' component={CreateCourse} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

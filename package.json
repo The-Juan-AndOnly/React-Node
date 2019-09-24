@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm --prefix ./api install && npm --prefix ./client install",
+    "dev": "concurrently \"npm start --prefix api\" \"npm start --prefix client\""
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/The-Juan-AndOnly/React-Node/issues"
   },
-  "homepage": "https://github.com/The-Juan-AndOnly/React-Node#readme"
+  "homepage": "https://github.com/The-Juan-AndOnly/React-Node#readme",
+  "dependencies": {
+    "eslint-config-react-app": "^5.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "install": "^0.13.0",
+    "npm": "^6.11.3"
+  }
 }
