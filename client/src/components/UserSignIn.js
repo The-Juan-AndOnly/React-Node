@@ -23,7 +23,28 @@ export default class UserSignIn extends Component {
     });
   };
 
-  submit = () => {};
+  submit = () => {
+    const { context } = this.props;
+    const { emailAddress, password } = this.state;
+
+    context.actions
+      .signIn(emailAddress, password)
+      .then(user => {
+        if (user === null) {
+          this.setState(() => {
+            return {
+              errors: [{ msg: 'Sign-in was unsuccessful' }]
+            };
+          });
+        } else {
+          this.props.history.push('/authenticated');
+          console.log(`${emailAddress} was successfully logged in`);
+        }
+      })
+      .catch(err => {
+        this.props.history.push('/error');
+      });
+  };
 
   render() {
     const { emailAddress, password, errors } = this.state;

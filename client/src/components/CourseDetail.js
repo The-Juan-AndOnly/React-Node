@@ -18,10 +18,8 @@ class CourseDetail extends Component {
       const response = await fetch(`${apiBaseUrl}/courses/${courseId}`);
       const data = await response.json();
       this.setState({ course: data.course, user: data.course.user });
-      console.log(this.state.user);
-      console.log(this.state.course);
     } catch (err) {
-      this.props.history.push('/');
+      this.props.history.push('/notfound');
     }
   };
 

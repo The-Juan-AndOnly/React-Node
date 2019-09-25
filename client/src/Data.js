@@ -26,7 +26,7 @@ export default class Data {
 
     if (requiresAuth) {
       const encodedCredentials = btoa(
-        `${credentials.emailAddress}: ${credentials.password}`
+        `${credentials.emailAddress}:${credentials.password}`
       );
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
     }
@@ -34,7 +34,7 @@ export default class Data {
     return fetch(url, options);
   }
 
-  async getUser(username, password) {
+  async getUser(emailAddress, password) {
     const response = await this.api(`/users`, 'GET', null, true, {
       emailAddress,
       password

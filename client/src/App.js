@@ -9,8 +9,10 @@ import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
+import UserSignOut from './components/UserSignOut';
 
 import NotFound from './components/NotFound';
+import PrivateRoute from './PrivateRoute';
 
 import {
   UserSignInWithContext,
@@ -24,8 +26,7 @@ function App() {
         <Route component={Header} />
         <Switch>
           <Route exact path='/' component={Courses} />
-          <Route path='/signup' component={UserSignUpWithContext} />
-          <Route path='/signin' component={UserSignInWithContext} />
+
           <Route
             exact
             path='/course/:id'
@@ -33,6 +34,9 @@ function App() {
           />
           <Route path='/courses/:id/update' component={UpdateCourse} />
           <Route path='/courses/create' component={CreateCourse} />
+          <Route path='/signup' component={UserSignUpWithContext} />
+          <Route path='/signin' component={UserSignInWithContext} />
+          <Route path='/signout' component={UserSignOut} />
           <Route component={NotFound} />
         </Switch>
       </div>

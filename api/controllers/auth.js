@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
   try {
     // Parse user's credential from Auth Header
     const credentials = auth(req);
-
+    console.log(credentials);
     // Check to see if user credential available
     if (credentials) {
       // Attempt to retrieve the user from data store
