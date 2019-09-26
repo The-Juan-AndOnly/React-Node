@@ -6,7 +6,9 @@ const Header = ({ context }) => {
 
   const headerDisplay = authUser ? (
     <React.Fragment>
-      <span>Welcome {authUser.firstName}</span>
+      <span>
+        Welcome {authUser.firstName} {authUser.lastName}!
+      </span>
       <Link className='signup' to='/signout'>
         Sign Out
       </Link>

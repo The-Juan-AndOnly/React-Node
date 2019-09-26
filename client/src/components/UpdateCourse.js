@@ -23,7 +23,7 @@ export default class UpdateCourse extends Component {
       } = data.course;
       this.setState({ title, description, estimatedTime, materialsNeeded });
     } catch (err) {
-      console.log(err);
+      this.props.history.push('/noutfound');
     }
   };
 

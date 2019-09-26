@@ -28,23 +28,30 @@ export default class UserSignIn extends Component {
     // Returns user to previous page that required a sign in or returns user to home page if user was not redirected to sign in
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
-
-    context.actions
-      .signIn(emailAddress, password)
-      .then(user => {
-        if (user === null) {
-          this.setState(() => {
-            return {
-              errors: [{ msg: 'Sign-in was unsuccessful' }]
-            };
-          });
-        } else {
-          this.props.history.push(from);
-        }
-      })
-      .catch(err => {
-        this.props.history.push('/error');
+    if (emailAddress === '' || password === '') {
+      this.setState(() => {
+        return {
+          errors: [{ msg: 'Email Address and/or Password is Incorrect' }]
+        };
       });
+    } else {
+      context.actions
+        .signIn(emailAddress, password)
+        .then(user => {
+          if (user === null) {
+            this.setState(() => {
+              return {
+                errors: [{ msg: 'Sign-in was unsuccessful' }]
+              };
+            });
+          } else {
+            this.props.history.push(from);
+          }
+        })
+        .catch(err => {
+          this.props.history.push('/error');
+        });
+    }
   };
 
   render() {
