@@ -25,6 +25,8 @@ export default class UserSignIn extends Component {
 
   submit = () => {
     const { context } = this.props;
+    // Returns user to previous page that required a sign in or returns user to home page if user was not redirected to sign in
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
 
     context.actions
@@ -37,8 +39,7 @@ export default class UserSignIn extends Component {
             };
           });
         } else {
-          this.props.history.push('/authenticated');
-          console.log(`${emailAddress} was successfully logged in`);
+          this.props.history.push(from);
         }
       })
       .catch(err => {
@@ -57,7 +58,7 @@ export default class UserSignIn extends Component {
               cancel={this.cancel}
               errors={errors}
               submit={this.submit}
-              submitButtonText='Sign Up'
+              submitButtonText='Sign In'
               elements={() => (
                 <React.Fragment>
                   <input

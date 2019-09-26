@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
 import { Link } from 'react-router-dom';
-import apiBaseUrl from '../config';
 
 export default class Courses extends Component {
   state = {
@@ -11,11 +10,15 @@ export default class Courses extends Component {
   componentDidMount() {
     this.fetchCourses();
   }
-
+  // Fetch Courses using context.data.api
   fetchCourses = async () => {
-    const response = await fetch(`${apiBaseUrl}/courses`);
-    const data = await response.json();
-    this.setState(() => ({ courses: data.courses, isLoading: false }));
+    try {
+      const response = await this.props.context.data.api('/courses');
+      const data = await response.json();
+      this.setState(() => ({ courses: data.courses, isLoading: false }));
+    } catch (err) {
+      this.props.history.push('/error');
+    }
   };
 
   render() {

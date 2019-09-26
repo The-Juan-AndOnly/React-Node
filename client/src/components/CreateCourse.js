@@ -10,6 +10,24 @@ export default class CreateCourse extends Component {
     errors: [],
     user: {}
   };
+  cancel = () => {
+    this.props.history.push('/');
+  };
+  change = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  };
+
+  submit = () => {
+    console.log('Course Created...');
+    console.log(this.state);
+    this.props.history.push('/');
+  };
   render() {
     const {
       title,
@@ -25,7 +43,7 @@ export default class CreateCourse extends Component {
           cancel={this.cancel}
           errors={errors}
           submit={this.submit}
-          submitButtonText='Sign Up'
+          submitButtonText='Create Course'
           elements={() => (
             <React.Fragment>
               <div className='grid-66'>
@@ -38,7 +56,7 @@ export default class CreateCourse extends Component {
                       type='text'
                       className='input-title course--title--input'
                       placeholder='Course title...'
-                      value=''
+                      value={title}
                       onChange={this.change}
                     />
                   </div>
@@ -51,6 +69,8 @@ export default class CreateCourse extends Component {
                       name='description'
                       className=''
                       placeholder='Course description...'
+                      value={description}
+                      onChange={this.change}
                     ></textarea>
                   </div>
                 </div>
@@ -67,7 +87,8 @@ export default class CreateCourse extends Component {
                           type='text'
                           className='course--time--input'
                           placeholder='Hours'
-                          value=''
+                          value={estimatedTime}
+                          onChange={this.change}
                         />
                       </div>
                     </li>
@@ -79,22 +100,13 @@ export default class CreateCourse extends Component {
                           name='materialsNeeded'
                           className=''
                           placeholder='List materials...'
+                          value={materialsNeeded}
+                          onChange={this.change}
                         ></textarea>
                       </div>
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div className='grid-100 pad-bottom'>
-                <button className='button' type='submit'>
-                  Create Course
-                </button>
-                <button
-                  className='button button-secondary'
-                  onClick={() => this.props.history.push('/')}
-                >
-                  Cancel
-                </button>
               </div>
             </React.Fragment>
           )}

@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import apiBaseUrl from '../config';
-
 class CourseDetail extends Component {
   state = {
-    course: [],
-    user: []
+    course: {},
+    user: {}
   };
   componentDidMount() {
     this.fetchCourse();
   }
-
+  // Retrieve a single course using context.data.api
   fetchCourse = async () => {
     const courseId = this.props.match.params.id;
     try {
-      const response = await fetch(`${apiBaseUrl}/courses/${courseId}`);
+      const response = await this.props.context.data.api(
+        `/courses/${courseId}`
+      );
       const data = await response.json();
       this.setState({ course: data.course, user: data.course.user });
     } catch (err) {
@@ -23,21 +23,46 @@ class CourseDetail extends Component {
     }
   };
 
+  displayCourseOptions = (course, user) => {
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
+    if (authUser) {
+      if (authUser.id === user.id) {
+        return (
+          <span>
+            <Link className='button' to={`/courses/${course.id}/update`}>
+              Update Course
+            </Link>
+            <Link className='button' to='/'>
+              Delete Course
+            </Link>
+          </span>
+        );
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  };
+
   render() {
     const { course, user } = this.state;
+
     return (
       <div>
         <div className='actions--bar'>
           <div className='bounds'>
             <div className='grid-100'>
-              <span>
+              {/* <span>
                 <Link className='button' to={`/courses/${course.id}/update`}>
                   Update Course
                 </Link>
                 <Link className='button' to='/'>
                   Delete Course
                 </Link>
-              </span>
+              </span> */}
+              {this.displayCourseOptions(course, user)}
               <Link className='button button-secondary' to='/'>
                 Return to List
               </Link>

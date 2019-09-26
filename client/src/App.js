@@ -1,42 +1,48 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import './App.css';
+// import Components that are subscribed to context
+import {
+  CoursesWithContext,
+  CourseDetailWithContext,
+  CreateCourseWithContext,
+  UpdateCourseWithContext,
+  UserSignOutWithContext,
+  UserSignInWithContext,
+  UserSignUpWithContext,
+  HeaderWithContext
+} from './context/ContextHelper';
 
-// import Home from './components/Home';
-import Header from './layout/Header';
-import Courses from './components/Courses';
-import CourseDetail from './components/CourseDetail';
-import CreateCourse from './components/CreateCourse';
-import UpdateCourse from './components/UpdateCourse';
-import UserSignOut from './components/UserSignOut';
-
+import Forbidden from './components/Forbidden';
 import NotFound from './components/NotFound';
+import UnhandledError from './components/UnhandledError';
+
+// Private Route for Authorization
 import PrivateRoute from './PrivateRoute';
 
-import {
-  UserSignInWithContext,
-  UserSignUpWithContext
-} from './context/ContextHelper';
+import './App.css';
 
 function App() {
   return (
     <Router>
       <div className='App'>
-        <Route component={Header} />
+        <HeaderWithContext />
         <Switch>
-          <Route exact path='/' component={Courses} />
-
-          <Route
-            exact
-            path='/course/:id'
-            render={props => <CourseDetail {...props} />}
+          <Route exact path='/' component={CoursesWithContext} />
+          <Route path='/course/:id' component={CourseDetailWithContext} />
+          <PrivateRoute
+            path='/courses/:id/update'
+            component={UpdateCourseWithContext}
           />
-          <Route path='/courses/:id/update' component={UpdateCourse} />
-          <Route path='/courses/create' component={CreateCourse} />
+          <PrivateRoute
+            path='/courses/create'
+            component={CreateCourseWithContext}
+          />
           <Route path='/signup' component={UserSignUpWithContext} />
           <Route path='/signin' component={UserSignInWithContext} />
-          <Route path='/signout' component={UserSignOut} />
+          <Route path='/signout' component={UserSignOutWithContext} />
+          <Route path='/forbidden' component={Forbidden} />
+          <Route path='/error' component={UnhandledError} />
           <Route component={NotFound} />
         </Switch>
       </div>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import apiBaseUrl from '../config';
 
 export default class UpdateCourse extends Component {
   state = {
@@ -14,7 +13,7 @@ export default class UpdateCourse extends Component {
   fetchCourse = async () => {
     const { id } = this.props.match.params;
     try {
-      const response = await fetch(`${apiBaseUrl}/courses/${id}`);
+      const response = await this.props.context.data.api(`/courses/${id}`);
       const data = await response.json();
       const {
         title,
