@@ -11,14 +11,16 @@ export default class UpdateCourse extends Component {
     materialsNeeded: '',
     errors: []
   };
+
   componentDidMount() {
     this.fetchCourse();
   }
+
   fetchCourse = async () => {
     const { id } = this.props.match.params;
     try {
       const response = await this.props.context.data.api(`/courses/${id}`);
-      console.log(response);
+
       const data = await response.json();
 
       const {
