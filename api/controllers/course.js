@@ -10,8 +10,12 @@ exports.validate = method => {
   switch (method) {
     case 'addCourse': {
       return [
-        check('title', 'Please include a Title').exists(),
-        check('description', 'Please include a Description').exists()
+        check('title', 'Please include a Title')
+          .not()
+          .isEmpty(),
+        check('description', 'Please include a Description')
+          .not()
+          .isEmpty()
       ];
     }
   }
@@ -83,6 +87,9 @@ exports.addCourse = async (req, res, next) => {
   const { title, description, estimatedTime, materialsNeeded } = req.body;
   try {
     const errors = validationResult(req);
+    console.log('Some errors');
+    console.log(errors);
+    console.log('End of error');
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }

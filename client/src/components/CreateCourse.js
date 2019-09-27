@@ -24,9 +24,26 @@ export default class CreateCourse extends Component {
   };
 
   submit = () => {
-    console.log('Course Created...');
-    console.log(this.state);
-    this.props.history.push('/');
+    const { title, description, materialsNeeded, estimatedTime } = this.state;
+    const { context } = this.props;
+    const { emailAddress, id } = context.authenticatedUser;
+    const pass = context.password;
+    const userId = id;
+    const course = {
+      title,
+      description,
+      materialsNeeded,
+      estimatedTime,
+      userId
+    };
+
+    context.data.createCourse(course, emailAddress, pass).then(errors => {
+      if (errors.length) {
+        this.setState({ errors });
+      } else {
+        this.props.history.push('/');
+      }
+    });
   };
   render() {
     const {
@@ -36,6 +53,7 @@ export default class CreateCourse extends Component {
       estimatedTime,
       errors
     } = this.state;
+    const { firstName, lastName } = this.props.context.authenticatedUser;
     return (
       <div className='bounds course--detail'>
         <h1>Create Course</h1>
@@ -60,7 +78,9 @@ export default class CreateCourse extends Component {
                       onChange={this.change}
                     />
                   </div>
-                  <p>By Joe Smith</p>
+                  <p>
+                    By {firstName} {lastName}
+                  </p>
                 </div>
                 <div className='course--description'>
                   <div>

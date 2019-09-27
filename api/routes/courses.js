@@ -36,11 +36,6 @@ router.put(
 // @route DELETE api/courses
 // @desc Deletes a course
 // @access Protected
-router.delete(
-  '/:id',
-  auth,
-  courseController.validate('addCourse'),
-  courseController.deleteCourse
-);
+router.delete('/:id', auth, courseController.deleteCourse);
 
 module.exports = router;

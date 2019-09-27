@@ -11,8 +11,14 @@ exports.validate = method => {
   switch (method) {
     case 'addUser': {
       return [
-        check('firstName', 'Please include First Name').exists(),
-        check('lastName', 'Please include Last Name').exists(),
+        check('firstName', 'Please include First Name')
+          .not()
+          .isEmpty(),
+
+        check('lastName', 'Please include Last Name')
+          .not()
+          .isEmpty(),
+
         check('emailAddress', 'Please enter a valid Email').isEmail(),
         check(
           'password',

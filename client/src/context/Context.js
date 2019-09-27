@@ -11,14 +11,16 @@ export class Provider extends Component {
   }
 
   state = {
-    authenticatedUser: Cookies.getJSON('authUser') || null
+    authenticatedUser: Cookies.getJSON('authUser') || null,
+    password: Cookies.getJSON('pass') || null
   };
 
   render() {
-    const { authenticatedUser } = this.state;
+    const { authenticatedUser, password } = this.state;
     // Values that will be passed into Context Provider
     const value = {
       authenticatedUser,
+      password,
       data: this.data,
 
       actions: {
@@ -37,18 +39,21 @@ export class Provider extends Component {
     if (user !== null) {
       this.setState(() => {
         return {
-          authenticatedUser: user
+          authenticatedUser: user,
+          password
         };
       });
       Cookies.set('authUser', JSON.stringify(user), { expires: 1 });
+      Cookies.set('pass', JSON.stringify(password), { expires: 1 });
     }
 
     return user;
   };
 
   signOut = () => {
-    this.setState({ authenticatedUser: null });
+    this.setState({ authenticatedUser: null, password: null });
     Cookies.remove('authUser');
+    Cookies.remove('pass');
   };
 }
 
