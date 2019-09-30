@@ -15,7 +15,7 @@ export default class UpdateCourse extends Component {
   componentDidMount() {
     this.fetchCourse();
   }
-
+  // fetch course data from the api to have the state populated with information
   fetchCourse = async () => {
     const { id } = this.props.match.params;
     try {
@@ -33,6 +33,7 @@ export default class UpdateCourse extends Component {
       this.setState(() => {
         return { title, description, estimatedTime, materialsNeeded, user };
       });
+      // If the user.id does not match the authenticated user id then reroute to /forbidden
       if (user.id !== this.props.context.authenticatedUser.id) {
         this.props.history.push('/forbidden');
       }
@@ -41,10 +42,13 @@ export default class UpdateCourse extends Component {
     }
   };
 
+  // "Cancel" button that returns the user to the "Course Detail" screen.
   cancel = () => {
-    this.props.history.push('/');
+    const { id } = this.props.match.params;
+    this.props.history.push(`/course/${id}`);
   };
 
+  // update state of controlled input
   change = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -62,6 +66,9 @@ export default class UpdateCourse extends Component {
       estimatedTime
     };
 
+    // submit updated course information to the database
+    // If the database returns errors then display the errors
+    // If not then reroute use back to main courses page
     context.data
       .updateCourse(course, id, emailAddress, pass)
       .then(errors => {

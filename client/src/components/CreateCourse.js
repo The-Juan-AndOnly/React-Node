@@ -10,9 +10,13 @@ export default class CreateCourse extends Component {
     errors: [],
     user: {}
   };
+
+  // Reroutes the user back to the main courses page when pressing cancel button
   cancel = () => {
     this.props.history.push('/');
   };
+
+  // Allows for updating state on a controlled input
   change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -23,12 +27,14 @@ export default class CreateCourse extends Component {
     });
   };
 
+  //
   submit = () => {
     const { title, description, materialsNeeded, estimatedTime } = this.state;
     const { context } = this.props;
     const { emailAddress, id } = context.authenticatedUser;
     const pass = context.password;
     const userId = id;
+    // Create a course object with the required information needed to create a new course
     const course = {
       title,
       description,
@@ -37,6 +43,7 @@ export default class CreateCourse extends Component {
       userId
     };
 
+    // Creates a new course and if any errors are returned from API validation then will update state to display the errors
     context.data.createCourse(course, emailAddress, pass).then(errors => {
       if (errors.length) {
         this.setState({ errors });
@@ -45,6 +52,7 @@ export default class CreateCourse extends Component {
       }
     });
   };
+
   render() {
     const {
       title,

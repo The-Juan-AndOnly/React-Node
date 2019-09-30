@@ -9,10 +9,12 @@ export default class UserSignIn extends Component {
     errors: []
   };
 
+  // on cancel sends user back to main page
   cancel = () => {
     this.props.history.push('/');
   };
 
+  // handles state change of controlled input
   change = e => {
     const name = e.target.name;
     const value = e.target.value;

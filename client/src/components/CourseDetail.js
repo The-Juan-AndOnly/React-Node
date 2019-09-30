@@ -11,6 +11,8 @@ class CourseDetail extends Component {
     this.fetchCourse();
   }
 
+  // Function that handles the displaying of Course Options
+  // If there is an authenticated user and the authUser id matches the course owner id then the update/delete buttons will display
   displayCourseOptions = (course, user) => {
     const { context } = this.props;
     const authUser = context.authenticatedUser;
@@ -35,6 +37,7 @@ class CourseDetail extends Component {
   };
 
   // Retrieve a single course using context.data.api
+  // If there are errors retrieving a course then the user will be routed to /notfound
   fetchCourse = async () => {
     const courseId = this.props.match.params.id;
     try {
@@ -48,7 +51,9 @@ class CourseDetail extends Component {
     }
   };
 
-  // Delete the course
+  // A confirmation window will display to confrim the user wants to delete the course
+  // If not then the user will stay on the current route
+  // If confirmed then the course will be deleted and the user is rerouted back to main index route
   handleDelete = () => {
     const courseId = this.props.match.params.id;
     const { context } = this.props;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// Default error component
 const UnhandledError = () => {
   return (
     <div className='bounds'>

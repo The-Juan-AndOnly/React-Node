@@ -1,6 +1,7 @@
 import React from 'react';
 import Spinner from '../img/pacman.gif';
 
+// Pacman Loader display
 const Loader = () => {
   const styles = {
     display: 'flex',

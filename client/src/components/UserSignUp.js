@@ -13,10 +13,12 @@ export default class UserSignUp extends Component {
     errors: []
   };
 
+  // on cancel send user back to main page
   cancel = () => {
     this.props.history.push('/');
   };
 
+  // handles state udates from controlled inputs
   change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -29,7 +31,7 @@ export default class UserSignUp extends Component {
 
   submit = () => {
     const { context } = this.props;
-    console.log(context);
+
     const {
       firstName,
       lastName,
@@ -37,20 +39,22 @@ export default class UserSignUp extends Component {
       password,
       confirmPassword
     } = this.state;
+    // Create a user object that will be passed into the createUser method
     const user = {
       firstName,
       lastName,
       emailAddress,
       password
     };
+    // Quick front end check to ensure that both the password and confirmPassword do match
     if (confirmPassword !== password) {
-      console.log('MisMatch');
       this.setState({ errors: [{ msg: 'Passwords do not match' }] });
     } else {
       context.data
         .createUser(user)
         .then(errors => {
-          // If errors are returned we'll set the errors state to the errors
+          // If errors are returned we'll set the errors state to the errors arrayto then be displayed
+          // Once a new user is successfully created we'll sign the user in.
 
           if (errors.length) {
             this.setState({ errors });

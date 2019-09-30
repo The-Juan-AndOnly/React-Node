@@ -34,12 +34,13 @@ export default class Data {
     return fetch(url, options);
   }
 
+  // Get a user from the database
   async getUser(emailAddress, password) {
     const response = await this.api(`/users`, 'GET', null, true, {
       emailAddress,
       password
     });
-
+    // If a user exists then return user if not then return null
     if (response.status === 200) {
       return response.json().then(data => data);
     } else if (response.status === 401) {
@@ -49,8 +50,11 @@ export default class Data {
     }
   }
 
+  // Create a user on the database
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
+    // If response status is 201/Successful then return empty errors array
+    // Else return the Validation Errors
     if (response.status === 201) {
       return [];
     } else if (response.status === 400) {
@@ -62,12 +66,16 @@ export default class Data {
     }
   }
 
+  // Create a Course on the database
   async createCourse(course, emailAddress, password) {
     console.log(course);
     const response = await this.api('/courses', 'POST', course, true, {
       emailAddress,
       password
     });
+
+    // If response status is 201/Successful then return empty errors array
+    // Else return the Validation Errors
     if (response.status === 201) {
       return [];
     } else if (response.status === 400) {
@@ -79,11 +87,15 @@ export default class Data {
     }
   }
 
+  // Update Course on the database
   async updateCourse(course, id, emailAddress, password) {
     const response = await this.api(`/courses/${id}`, 'PUT', course, true, {
       emailAddress,
       password
     });
+
+    // If response status is 201/Successful then return empty errors array
+    // Else return the Validation Errors
     if (response.status === 204) {
       return [];
     } else if (response.status === 400) {
@@ -94,11 +106,16 @@ export default class Data {
       throw new Error();
     }
   }
+
+  // Delete a course from the database
   async deleteCourse(id, emailAddress, password) {
     const response = await this.api(`/courses/${id}`, 'DELETE', null, true, {
       emailAddress,
       password
     });
+
+    // If response status is 201/Successful then return empty errors array
+    // Else return the Validation Errors
     if (response.status === 204) {
       return [];
     } else if (response.status === 403) {

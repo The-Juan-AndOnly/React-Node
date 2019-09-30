@@ -7,10 +7,11 @@ export default class Courses extends Component {
     courses: [],
     isLoading: true
   };
+
   componentDidMount() {
     this.fetchCourses();
   }
-  // Fetch Courses using context.data.api
+  // Fetch All the Courses using context.data.api
   fetchCourses = async () => {
     try {
       const response = await this.props.context.data.api('/courses');
@@ -23,6 +24,7 @@ export default class Courses extends Component {
 
   render() {
     const { courses, isLoading } = this.state;
+    // Map out the courses array so each course is render in a Link tag
     let courseData = courses.map(course => {
       return (
         <div className='grid-33' key={course.id}>

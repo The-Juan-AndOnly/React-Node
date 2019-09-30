@@ -10,6 +10,8 @@ export class Provider extends Component {
     this.data = new Data();
   }
 
+  // Create state for authUser with their id/firstName/lastName/email and one for the password.
+  // States initial value will either be the value stored in cookies or null
   state = {
     authenticatedUser: Cookies.getJSON('authUser') || null,
     password: Cookies.getJSON('pass') || null
@@ -22,7 +24,6 @@ export class Provider extends Component {
       authenticatedUser,
       password,
       data: this.data,
-
       actions: {
         signIn: this.signIn,
         signOut: this.signOut
@@ -33,9 +34,10 @@ export class Provider extends Component {
     );
   }
 
+  // Sign in function that will use the getUser method from Data.js then if a user is returned will update the state with user information as well as create a Cookie for the authUser and password
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
-    console.log(user);
+
     if (user !== null) {
       this.setState(() => {
         return {
@@ -50,6 +52,7 @@ export class Provider extends Component {
     return user;
   };
 
+  // on signout sets the state back to null and removes Cookies
   signOut = () => {
     this.setState({ authenticatedUser: null, password: null });
     Cookies.remove('authUser');

@@ -1,13 +1,12 @@
 import React from 'react';
 
-export default props => {
-  const { cancel, errors, submit, submitButtonText, elements } = props;
-
+export default ({ cancel, errors, submit, submitButtonText, elements }) => {
+  // Prevent form from reloading and calls the submit function from parent component
   function handleSubmit(event) {
     event.preventDefault();
     submit();
   }
-
+  // Prevent form from realoding and calls the cancel function from the parent component
   function handleCancel(event) {
     event.preventDefault();
     cancel();
