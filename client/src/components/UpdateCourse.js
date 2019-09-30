@@ -18,8 +18,9 @@ export default class UpdateCourse extends Component {
   // fetch course data from the api to have the state populated with information
   fetchCourse = async () => {
     const { id } = this.props.match.params;
+    const { context } = this.props;
     try {
-      const response = await this.props.context.data.api(`/courses/${id}`);
+      const response = await context.data.api(`/courses/${id}`);
 
       const data = await response.json();
 
@@ -34,7 +35,7 @@ export default class UpdateCourse extends Component {
         return { title, description, estimatedTime, materialsNeeded, user };
       });
       // If the user.id does not match the authenticated user id then reroute to /forbidden
-      if (user.id !== this.props.context.authenticatedUser.id) {
+      if (user.id !== context.authenticatedUser.id) {
         this.props.history.push('/forbidden');
       }
     } catch (err) {
